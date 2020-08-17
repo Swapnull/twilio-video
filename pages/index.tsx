@@ -1,23 +1,14 @@
 import React, { useState, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
-import useRoomState from '~hooks/useRoomState';
-import Room from '~components/Room';
-import LocalVideoPreview from '~components/LocalVideoPreview';
-import Controls from '~components/Controls';
+import { Heading, Text } from '@feast-it/pesto';
 
 const Container = styled.div<{ height?: string }>`
   display: grid;
   grid-template-rows: auto 1fr;
-  height: ${({ height }) => height || '100vh'};
-`;
-
-const Main = styled.main<{ height?: string }>`
-  overflow: hidden;
-  height: ${({ height }) => height || '100vh'};
+  height: 100vh;
 `;
 
 const IndexPage = () => {
-  const roomState = useRoomState();
   const [height, setHeight] = useState(`100vh`);
 
   useLayoutEffect(() => {
@@ -35,11 +26,11 @@ const IndexPage = () => {
 
   return (
     <Container height={`${height}px`}>
-      <Main height={`${height}px`}>
-        {roomState === 'disconnected' ? <LocalVideoPreview /> : <Room />}
-        <Controls />
-      </Main>
-      {/*<ReconnectingNotification />*/}
+      <Heading>Video Chat</Heading>
+      <Text>
+        Welcome to Feast It Video Chat! Hit the button below to start a call,
+        this will give you a link you can share with other parties.
+      </Text>
     </Container>
   );
 };

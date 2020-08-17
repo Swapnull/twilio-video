@@ -18,7 +18,7 @@ import useIsUserActive from '~hooks/useIsUserActive';
 import useRoomState from '~hooks/useRoomState';
 import { VideoContext } from '~contexts/Video';
 import { GlobalContext } from '~contexts/Global';
-import DeviceSelector from '~components/DeviceSelector';
+import DeviceSelector from '~components/Video/DeviceSelector';
 
 const Controls = () => {
   const [deviceSelectorOpen, setDeviceSelectorOpen] = useState(true);

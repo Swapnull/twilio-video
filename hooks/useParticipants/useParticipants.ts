@@ -6,8 +6,10 @@ import useDominantSpeaker from '~hooks/useDominantSpeaker';
 const useParticipants = () => {
   const { room } = useContext(VideoContext);
   const dominantSpeaker = useDominantSpeaker();
+  console.log('room', room);
+  console.log('participants', room.participants);
   const [participants, setParticipants] = useState(
-    Array.from(room.participants.values())
+    Array.from(room?.participants?.values())
   );
 
   const participantConnected = (participant: RemoteParticipant) =>

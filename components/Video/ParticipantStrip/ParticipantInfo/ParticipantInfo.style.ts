@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { minWidth } from '@feast-it/pesto';
+import { maxWidth } from '@feast-it/pesto';
 
 const Container = styled.div`
   position: relative;
@@ -8,9 +8,10 @@ const Container = styled.div`
   overflow: hidden;
   cursor: pointer;
 
-  ${({ theme }) => minWidth(theme.breakpoints.m)} {
-    margin: 1rem 0;
+  ${({ theme }) => maxWidth(theme.breakpoints.m)} {
     font-size: 10px;
+    width: 160px;
+    height: 100%;
   }
 
   & video {

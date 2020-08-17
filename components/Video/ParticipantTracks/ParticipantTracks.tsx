@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Participant, Track } from 'twilio-video';
 import Publication from './Publication';
-import usePublications from '../../hooks/usePublications/usePublications';
+import usePublications from '~hooks/usePublications';
 import { VideoContext } from '~contexts/Video';
 
 interface Props {

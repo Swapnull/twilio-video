@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FormControl, MenuItem, Select } from '@material-ui/core';
 import { Heading, Text } from '@feast-it/pesto';
-import AudioLevelIndicator from '~components/ParticipantStrip/ParticipantInfo/AudioLevelIndicator';
+import AudioLevelIndicator from '~components/Video/ParticipantStrip/ParticipantInfo/AudioLevelIndicator';
 import { useAudioInputDevices } from '~hooks/useDevices';
 import { VideoContext } from '~contexts/Video';
 import Style from './AudioInputList.style';

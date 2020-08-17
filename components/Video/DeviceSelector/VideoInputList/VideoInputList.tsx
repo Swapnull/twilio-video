@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { FormControl, MenuItem, Select } from '@material-ui/core';
 import { LocalVideoTrack } from 'twilio-video';
 import { useVideoInputDevices } from '~hooks/useDevices';
-import VideoTrack from '~components/ParticipantTracks/VideoTrack';
+import VideoTrack from '~components/Video/ParticipantTracks/VideoTrack';
 import { VideoContext } from '~contexts/Video';
 import Style from './VideoInputList.style';
 import { Heading, Text } from '@feast-it/pesto';

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Info from './Info';
-import ParticipantTracks from '~components/ParticipantTracks';
+import ParticipantTracks from '~components/Video/ParticipantTracks';
 import useMainSpeaker from '~hooks/useMainSpeaker';
 import { SelectedParticipantContext } from '~contexts/SelectedParticipant';
 

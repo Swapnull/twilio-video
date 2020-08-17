@@ -1,62 +1,41 @@
-import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
-import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import useRoomState from '~hooks/useRoomState';
-import Room from '~components/Room';
-import LocalVideoPreview from '~components/LocalVideoPreview';
-import Controls from '~components/Controls';
-import { GlobalContext } from '~contexts/Global';
-import { VideoContext } from '~contexts/Video';
+import React from 'react';
+import { VideoProvider } from '~contexts/Video';
+import Video from '~components/Video';
+import { ConnectOptions } from 'twilio-video';
+import isMobile from '~utils/isMobile';
 
-const Container = styled.div<{ height?: number }>`
-  display: grid;
-  grid-template-rows: auto 1fr;
-  height: ${({ height }) => height || '100vh'};
-`;
-
-const Main = styled.main<{ height?: number }>`
-  overflow: hidden;
-  height: ${({ height }) => height || '100vh'};
-`;
-
-const VideoRoomPage = ({ room }) => {
-  const roomState = useRoomState();
-  const { getToken } = useContext(GlobalContext);
-  const { connect } = useContext(VideoContext);
-
-  const [height, setHeight] = useState(null);
-
-  useEffect(() => {
-    const joinRoom = async () => {
-      const token = await getToken(room as string);
-      await connect(token);
-    };
-    joinRoom();
-  }, [room]);
-
-  useLayoutEffect(() => {
-    const onResize = () => {
-      setHeight(
-        String(window?.innerHeight * (window.visualViewport?.scale || 1))
-      );
-    };
-
-    window?.addEventListener('resize', onResize);
-    return () => {
-      window?.removeEventListener('resize', onResize);
-    };
-  });
-
-  return (
-    <Container height={height}>
-      <Main height={height}>
-        {roomState === 'disconnected' ? <LocalVideoPreview /> : <Room />}
-        <Controls />
-      </Main>
-      {/*<ReconnectingNotification />*/}
-    </Container>
-  );
+const connectionOptions: ConnectOptions = {
+  bandwidthProfile: {
+    video: {
+      mode: 'collaboration',
+      dominantSpeakerPriority: 'standard',
+      renderDimensions: {
+        high: { height: 1080, width: 1920 },
+        standard: { height: 720, width: 1280 },
+        low: { height: 90, width: 160 },
+      },
+    },
+  },
+  dominantSpeaker: true,
+  networkQuality: { local: 1, remote: 1 },
+  maxAudioBitrate: 16000,
+  preferredVideoCodecs: [{ codec: 'VP8', simulcast: true }],
 };
+
+// For mobile browsers, limit the maximum incoming video bitrate to 2.5 Mbps.
+if (isMobile && connectionOptions?.bandwidthProfile?.video) {
+  connectionOptions!.bandwidthProfile!.video!.maxSubscriptionBitrate = 2500000;
+}
+
+const VideoRoomPage = ({ room }: { room: string }) => (
+  <VideoProvider
+    options={connectionOptions}
+    onError={(error) => console.error(`Video Provider Error: ${error}`)}
+    onDisconnect={() => console.warn('Video Provider Disconnected')}
+  >
+    <Video room={room} />
+  </VideoProvider>
+);
 
 VideoRoomPage.getInitialProps = ({ query }) => ({ room: query.room });
 
